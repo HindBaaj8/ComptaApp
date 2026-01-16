@@ -2,65 +2,83 @@ import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { addTransaction, deleteTransaction } from '../features/Actifsslice';
 import { formatCurrency, formatDate, exportToPDF } from '../features/Helpers';
-import { Plus, Trash2, Download, TrendingUp, TrendingDown } from 'lucide-react';
+import {
+  Plus,
+  Trash2,
+  Download,
+  TrendingUp,
+  TrendingDown,
+  Wallet,
+  Building2,
+  Users,
+  BarChart3
+} from 'lucide-react';
 
 const Actifsmanager = () => {
   const dispatch = useDispatch();
-  const { caisse, banque, clients, transactions } = useSelector(state => state.actifs || {
-    caisse: 50000,
-    banque: 150000,
-    clients: 80000,
-    transactions: []
-  });
+
+  const { caisse, banque, clients, transactions } = useSelector(
+    state => state.actifs || {
+      caisse: 50000,
+      banque: 150000,
+      clients: 80000,
+      transactions: []
+    }
+  );
 
   const [formData, setFormData] = useState({
     type: 'entree',
     montant: '',
     compte: 'caisse',
     description: '',
-    date: new Date().toISOString().split('T')[0],
+    date: new Date().toISOString().split('T')[0]
   });
 
-  const [showToast, setShowToast] = useState({ show: false, message: '', type: '' });
+  const [toast, setToast] = useState({ show: false, message: '', type: '' });
+
+  const showToast = (message, type) => {
+    setToast({ show: true, message, type });
+    setTimeout(() => setToast({ show: false, message: '', type: '' }), 3000);
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
 
     if (!formData.montant || !formData.description) {
-      showToastMessage('Veuillez remplir tous les champs', 'error');
+      showToast('Veuillez remplir tous les champs', 'error');
       return;
     }
 
     const montant = parseFloat(formData.montant);
-    const solde = formData.compte === 'caisse' ? caisse : formData.compte === 'banque' ? banque : clients;
+    const solde =
+      formData.compte === 'caisse'
+        ? caisse
+        : formData.compte === 'banque'
+        ? banque
+        : clients;
 
     if (formData.type === 'sortie' && montant > solde) {
-      showToastMessage(`Solde insuffisant dans ${formData.compte}`, 'error');
+      showToast('Solde insuffisant', 'error');
       return;
     }
 
     dispatch(addTransaction(formData));
-    showToastMessage(`Transaction ${formData.type === 'entree' ? 'ajoutée' : 'effectuée'} avec succès`, 'success');
+    showToast('Transaction enregistrée avec succès', 'success');
 
     setFormData({
       type: 'entree',
       montant: '',
       compte: 'caisse',
       description: '',
-      date: new Date().toISOString().split('T')[0],
+      date: new Date().toISOString().split('T')[0]
     });
   };
 
   const handleDelete = (id) => {
-    if (window.confirm('Êtes-vous sûr de vouloir annuler cette transaction ?')) {
+    if (window.confirm('Annuler cette transaction ?')) {
       dispatch(deleteTransaction(id));
-      showToastMessage('Transaction annulée', 'success');
+      showToast('Transaction annulée', 'success');
     }
-  };
-
-  const showToastMessage = (message, type) => {
-    setShowToast({ show: true, message, type });
-    setTimeout(() => setShowToast({ show: false, message: '', type: '' }), 3000);
   };
 
   const handleExportPDF = () => {
@@ -69,121 +87,131 @@ const Actifsmanager = () => {
       Type: t.type === 'entree' ? 'Entrée' : 'Sortie',
       Compte: t.compte,
       Description: t.description,
-      Montant: formatCurrency(t.montant),
+      Montant: formatCurrency(t.montant)
     }));
+
     exportToPDF(data, 'Historique des Transactions');
-    showToastMessage('Export PDF réussi', 'success');
+    showToast('Export PDF réussi', 'success');
   };
 
   return (
     <div>
-      {showToast.show && (
-        <div className={`toast ${showToast.type}`}>
-          {showToast.message}
-        </div>
-      )}
+      {/* ================= TOAST ================= */}
+      {toast.show && <div className={`toast ${toast.type}`}>{toast.message}</div>}
 
-      <div className="kpi-grid" style={{ marginBottom: '30px' }}>
+      {/* ================= KPI ================= */}
+      <div className="kpi-grid">
         <div className="kpi-card">
-          <div className="kpi-label">💰 Caisse</div>
-          <div className="kpi-value" style={{ color: 'var(--primary)' }}>{formatCurrency(caisse)}</div>
-        </div>
-
-        <div className="kpi-card">
-          <div className="kpi-label">🏦 Banque</div>
-          <div className="kpi-value" style={{ color: 'var(--secondary)' }}>{formatCurrency(banque)}</div>
+          <Wallet />
+          <div>
+            <div className="kpi-label">Caisse</div>
+            <div className="kpi-value">{formatCurrency(caisse)}</div>
+          </div>
         </div>
 
         <div className="kpi-card">
-          <div className="kpi-label">👥 Clients (Créances)</div>
-          <div className="kpi-value" style={{ color: 'var(--info)' }}>{formatCurrency(clients)}</div>
+          <Building2 />
+          <div>
+            <div className="kpi-label">Banque</div>
+            <div className="kpi-value">{formatCurrency(banque)}</div>
+          </div>
+        </div>
+
+        <div className="kpi-card">
+          <Users />
+          <div>
+            <div className="kpi-label">Clients</div>
+            <div className="kpi-value">{formatCurrency(clients)}</div>
+          </div>
         </div>
 
         <div className="kpi-card success">
-          <div className="kpi-label">📊 Total Actifs</div>
-          <div className="kpi-value">{formatCurrency(caisse + banque + clients)}</div>
+          <BarChart3 />
+          <div>
+            <div className="kpi-label">Total Actifs</div>
+            <div className="kpi-value">
+              {formatCurrency(caisse + banque + clients)}
+            </div>
+          </div>
         </div>
       </div>
 
+      {/* ================= FORM ================= */}
       <div className="form-section">
-        <h3>➕ Nouvelle Transaction</h3>
+        <h3>Nouvelle transaction</h3>
+
         <form onSubmit={handleSubmit}>
           <div className="form-grid">
             <div className="form-group">
-              <label>Type de transaction *</label>
+              <label>Type</label>
               <select
                 value={formData.type}
-                onChange={(e) => setFormData({ ...formData, type: e.target.value })}
-                required
+                onChange={e => setFormData({ ...formData, type: e.target.value })}
               >
-                <option value="entree">💵 Entrée</option>
-                <option value="sortie">💸 Sortie</option>
+                <option value="entree">Entrée</option>
+                <option value="sortie">Sortie</option>
               </select>
             </div>
 
             <div className="form-group">
-              <label>Compte *</label>
+              <label>Compte</label>
               <select
                 value={formData.compte}
-                onChange={(e) => setFormData({ ...formData, compte: e.target.value })}
-                required
+                onChange={e => setFormData({ ...formData, compte: e.target.value })}
               >
-                <option value="caisse">💰 Caisse ({formatCurrency(caisse)})</option>
-                <option value="banque">🏦 Banque ({formatCurrency(banque)})</option>
-                <option value="clients">👥 Clients ({formatCurrency(clients)})</option>
+                <option value="caisse">Caisse</option>
+                <option value="banque">Banque</option>
+                <option value="clients">Clients</option>
               </select>
             </div>
 
             <div className="form-group">
-              <label>Montant (MAD) *</label>
+              <label>Montant</label>
               <input
                 type="number"
-                step="0.01"
                 value={formData.montant}
-                onChange={(e) => setFormData({ ...formData, montant: e.target.value })}
-                placeholder="0.00"
-                required
+                onChange={e => setFormData({ ...formData, montant: e.target.value })}
               />
             </div>
 
             <div className="form-group">
-              <label>Date *</label>
+              <label>Date</label>
               <input
                 type="date"
                 value={formData.date}
-                onChange={(e) => setFormData({ ...formData, date: e.target.value })}
-                required
+                onChange={e => setFormData({ ...formData, date: e.target.value })}
               />
             </div>
 
-            <div className="form-group" style={{ gridColumn: 'span 2' }}>
-              <label>Description *</label>
+            <div className="form-group full">
+              <label>Description</label>
               <textarea
                 value={formData.description}
-                onChange={(e) => setFormData({ ...formData, description: e.target.value })}
-                placeholder="Détails de la transaction..."
-                required
+                onChange={e =>
+                  setFormData({ ...formData, description: e.target.value })
+                }
               />
             </div>
           </div>
 
-          <button type="submit" className="btn btn-primary" style={{ marginTop: '20px' }}>
+          <button className="btn btn-primary">
             <Plus size={18} />
-            Enregistrer la transaction
+            Enregistrer
           </button>
         </form>
       </div>
 
+      {/* ================= TABLE ================= */}
       <div className="table-section">
         <div className="table-header">
-          <h3>📜 Historique des Transactions</h3>
+          <h3>Historique des transactions</h3>
           <button className="btn btn-success" onClick={handleExportPDF}>
             <Download size={16} />
-            Exporter PDF
+            Export PDF
           </button>
         </div>
 
-        {transactions && transactions.length > 0 ? (
+        {transactions.length > 0 ? (
           <table className="data-table">
             <thead>
               <tr>
@@ -192,44 +220,31 @@ const Actifsmanager = () => {
                 <th>Compte</th>
                 <th>Description</th>
                 <th>Montant</th>
-                <th>Actions</th>
+                <th></th>
               </tr>
             </thead>
             <tbody>
-              {[...transactions].reverse().map(transaction => (
-                <tr key={transaction.id}>
-                  <td>{formatDate(transaction.date)}</td>
+              {[...transactions].reverse().map(t => (
+                <tr key={t.id}>
+                  <td>{formatDate(t.date)}</td>
                   <td>
-                    {transaction.type === 'entree' ? (
-                      <span style={{ color: 'var(--success)', display: 'flex', alignItems: 'center', gap: '5px' }}>
-                        <TrendingUp size={16} />
-                        Entrée
+                    {t.type === 'entree' ? (
+                      <span className="success">
+                        <TrendingUp size={14} /> Entrée
                       </span>
                     ) : (
-                      <span style={{ color: 'var(--danger)', display: 'flex', alignItems: 'center', gap: '5px' }}>
-                        <TrendingDown size={16} />
-                        Sortie
+                      <span className="danger">
+                        <TrendingDown size={14} /> Sortie
                       </span>
                     )}
                   </td>
-                  <td>
-                    {transaction.compte === 'caisse' && '💰 Caisse'}
-                    {transaction.compte === 'banque' && '🏦 Banque'}
-                    {transaction.compte === 'clients' && '👥 Clients'}
-                  </td>
-                  <td>{transaction.description}</td>
-                  <td style={{ 
-                    color: transaction.type === 'entree' ? 'var(--success)' : 'var(--danger)', 
-                    fontWeight: 'bold' 
-                  }}>
-                    {transaction.type === 'entree' ? '+' : '-'}{formatCurrency(transaction.montant)}
+                  <td>{t.compte}</td>
+                  <td>{t.description}</td>
+                  <td className={t.type === 'entree' ? 'success' : 'danger'}>
+                    {formatCurrency(t.montant)}
                   </td>
                   <td>
-                    <button 
-                      className="btn-delete" 
-                      onClick={() => handleDelete(transaction.id)}
-                      style={{ padding: '6px 10px' }}
-                    >
+                    <button className="btn-delete" onClick={() => handleDelete(t.id)}>
                       <Trash2 size={14} />
                     </button>
                   </td>
@@ -240,7 +255,7 @@ const Actifsmanager = () => {
         ) : (
           <div className="empty-state">
             <h4>Aucune transaction</h4>
-            <p>Commencez par enregistrer votre première transaction</p>
+            <p>Ajoutez votre première transaction</p>
           </div>
         )}
       </div>

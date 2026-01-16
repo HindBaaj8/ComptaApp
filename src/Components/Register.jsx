@@ -240,7 +240,7 @@ const Register = () => {
               </div>
 
               <div className="terms-box">
-                <p>En créant un compte, vous acceptez nos <a href="#" onClick={(e) => e.preventDefault()}>Conditions d'utilisation</a> et notre <a href="#" onClick={(e) => e.preventDefault()}>Politique de confidentialité</a>.</p>
+                <p>En créant un compte, vous acceptez nos <button type="button" onClick={(e) => e.preventDefault()} style={{ background: 'none', border: 'none', color: 'inherit', textDecoration: 'underline', cursor: 'pointer' }}>Conditions d'utilisation</button> et notre <button type="button" onClick={(e) => e.preventDefault()} style={{ background: 'none', border: 'none', color: 'inherit', textDecoration: 'underline', cursor: 'pointer' }}>Politique de confidentialité</button>.</p>
               </div>
 
               <button type="submit" className="submit-btn" disabled={loading}>

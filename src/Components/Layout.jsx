@@ -3,8 +3,8 @@ import { Outlet, useNavigate, useLocation } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { toggleTheme } from '../features/Themeslice';
 import { logout } from '../features/Authslice';
-import { LogOut, User } from 'lucide-react';
-
+import { LayoutDashboard, TrendingUp, TrendingDown, Receipt, FileText, FileBarChart, LogOut, User, Moon, Sun } from 'lucide-react';
+import './Layout.css'; 
 const Layout = () => {
   const navigate = useNavigate();
   const location = useLocation();
@@ -20,12 +20,12 @@ const Layout = () => {
   }, [darkMode]);
 
   const menuItems = [
-    { path: '/dashboard', label: 'Dashboard', emoji: '📊' },
-    { path: '/actifs', label: 'Actifs', emoji: '💰' },
-    { path: '/passifs', label: 'Passifs', emoji: '💳' },
-    { path: '/charges', label: 'Charges', emoji: '💸' },
-    { path: '/produits', label: 'Produits', emoji: '💵' },
-    { path: '/factures', label: 'Factures', emoji: '📄' },
+    { path: '/dashboard', label: 'Dashboard', icon: LayoutDashboard },
+    { path: '/actifs', label: 'Actifs', icon: TrendingUp },
+    { path: '/passifs', label: 'Passifs', icon: TrendingDown },
+    { path: '/charges', label: 'Charges', icon: Receipt },
+    { path: '/produits', label: 'Produits', icon: FileText },
+    { path: '/factures', label: 'Factures', icon: FileBarChart },
   ];
 
   const handleMenuClick = (path) => {
@@ -52,52 +52,56 @@ const Layout = () => {
 
       <aside className={`sidebar ${mobileMenuOpen ? 'mobile-open' : ''}`}>
         <div className="sidebar-header">
-          <h1>💼 ComptaApp</h1>
-          <p>Gestion Comptable Pro</p>
+          <div className="logo">
+            <div className="logo-icon"><LayoutDashboard/></div>
+            <div className="logo-text">
+              <h1>ComptaApp</h1>
+              <p>Gestion Comptable Pro</p>
+            </div>
+          </div>
         </div>
 
         {currentUser && (
           <div className="user-info">
             <div className="user-avatar">
-              <User size={20} color="white" />
+              <User size={20} />
             </div>
             <div className="user-details">
               <div className="user-name">{currentUser.nom}</div>
               <div className="user-role">
-                {currentUser.role === 'admin' ? '👑 Admin' : '👤 Utilisateur'}
+                {currentUser.role === 'admin' ? 'Admin' : 'Utilisateur'}
               </div>
             </div>
           </div>
         )}
 
-        <nav>
-          <ul className="sidebar-menu">
-            {menuItems.map(item => (
-              <li key={item.path}>
-                <button
-                  className={location.pathname === item.path ? 'active' : ''}
-                  onClick={() => handleMenuClick(item.path)}
-                >
-                  <span className="menu-item-content">
-                    <span role="img" aria-label={item.label}>{item.emoji}</span>
-                    <span>{item.label}</span>
-                  </span>
-                </button>
-              </li>
-            ))}
-          </ul>
+        <nav className="sidebar-nav">
+          {menuItems.map(item => {
+            const Icon = item.icon;
+            return (
+              <button
+                key={item.path}
+                className={`nav-item ${location.pathname === item.path ? 'active' : ''}`}
+                onClick={() => handleMenuClick(item.path)}
+              >
+                <Icon size={20} />
+                <span>{item.label}</span>
+              </button>
+            );
+          })}
         </nav>
 
-        <div className="theme-toggle">
-          <button onClick={() => dispatch(toggleTheme())}>
-            <span>{darkMode ? '☀️' : '🌙'}</span>
+        <div className="sidebar-footer">
+          <button 
+            className="mode-toggle"
+            onClick={() => dispatch(toggleTheme())}
+          >
+            {darkMode ? <Sun size={20} /> : <Moon size={20} />}
             <span>{darkMode ? 'Mode Clair' : 'Mode Sombre'}</span>
           </button>
-        </div>
 
-        <div className="logout-container">
           <button onClick={handleLogout} className="logout-button">
-            <LogOut size={18} />
+            <LogOut size={20} />
             <span>Se déconnecter</span>
           </button>
         </div>
@@ -113,6 +117,7 @@ const Layout = () => {
           onClick={() => setMobileMenuOpen(false)}
         />
       )}
+
     </div>
   );
 };

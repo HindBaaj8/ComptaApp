@@ -61,14 +61,14 @@ const Dashboard = () => {
       label: 'Charges par catégorie',
       data: Object.values(chargesParCategorie),
       backgroundColor: [
-        'rgba(255, 99, 132, 0.8)',
-        'rgba(54, 162, 235, 0.8)',
-        'rgba(255, 206, 86, 0.8)',
-        'rgba(75, 192, 192, 0.8)',
-        'rgba(153, 102, 255, 0.8)',
-        'rgba(255, 159, 64, 0.8)',
-        'rgba(199, 199, 199, 0.8)',
-        'rgba(231, 76, 60, 0.8)',
+        'rgba(41, 128, 185, 0.8)',
+        'rgba(39, 174, 96, 0.8)',
+        'rgba(52, 152, 219, 0.8)',
+        'rgba(46, 204, 113, 0.8)',
+        'rgba(26, 188, 156, 0.8)',
+        'rgba(155, 89, 182, 0.8)',
+        'rgba(44, 62, 80, 0.8)',
+        'rgba(230, 126, 34, 0.8)',
       ],
       borderColor: 'rgba(255, 255, 255, 1)',
       borderWidth: 2,
@@ -118,8 +118,8 @@ const Dashboard = () => {
   const barDataDynamic = {
     labels: sortedMonths.map(m => monthNames[m]),
     datasets: [
-      { label: 'Produits + Factures Clients', data: produitsParMois, backgroundColor: 'rgba(75, 192, 192, 0.8)' },
-      { label: 'Charges + Factures Fournisseurs', data: chargesParMois, backgroundColor: 'rgba(255, 99, 132, 0.8)' },
+      { label: 'Produits + Factures Clients', data: produitsParMois, backgroundColor: 'rgba(39, 174, 96, 0.8)' },
+      { label: 'Charges + Factures Fournisseurs', data: chargesParMois, backgroundColor: 'rgba(231, 76, 60, 0.8)' },
     ],
   };
 
@@ -146,7 +146,7 @@ const Dashboard = () => {
   return (
     <div className="dashboard">
       <div className="dashboard-header">
-        <h2>📊 Tableau de Bord</h2>
+        <h2> Tableau de Bord</h2>
         <p>Vue d'ensemble de votre comptabilité</p>
       </div>
 
@@ -171,7 +171,7 @@ const Dashboard = () => {
           <div className="kpi-label"><DollarSign size={20} /> Résultat</div>
           <div className="kpi-value">{formatCurrency(resultatCalcule)}</div>
           <small style={{ fontSize: '12px', opacity: 0.8 }}>
-            {resultatCalcule >= 0 ? '✅ Bénéfice' : '⚠️ Perte'}
+            {resultatCalcule >= 0 ? ' Bénéfice' : ' Perte'}
           </small>
         </div>
 
@@ -195,8 +195,8 @@ const Dashboard = () => {
       </div>
 
       <div className="kpi-grid" style={{ marginTop: '20px' }}>
-        <div className="kpi-card" style={{ background: 'linear-gradient(135deg, #3498db, #2980b9)' }}>
-          <div className="kpi-label" style={{ color: 'white' }}>📄 Factures Clients Payées</div>
+        <div className="kpi-card" style={{ background: 'linear-gradient(135deg, #2980b9, #27ae60)' }}>
+          <div className="kpi-label" style={{ color: 'white' }}> Factures Clients Payées</div>
           <div className="kpi-value" style={{ color: 'white' }}>{facturesClients.length}</div>
           <small style={{ fontSize: '12px', color: 'white', opacity: 0.9 }}>
             Montant: {formatCurrency(totalFacturesClients)}
@@ -204,7 +204,7 @@ const Dashboard = () => {
         </div>
 
         <div className="kpi-card" style={{ background: 'linear-gradient(135deg, #e74c3c, #c0392b)' }}>
-          <div className="kpi-label" style={{ color: 'white' }}>📦 Factures Fournisseurs Payées</div>
+          <div className="kpi-label" style={{ color: 'white' }}> Factures Fournisseurs Payées</div>
           <div className="kpi-value" style={{ color: 'white' }}>{facturesFournisseurs.length}</div>
           <small style={{ fontSize: '12px', color: 'white', opacity: 0.9 }}>
             Montant: {formatCurrency(totalFacturesFournisseurs)}
@@ -212,7 +212,7 @@ const Dashboard = () => {
         </div>
 
         <div className="kpi-card warning">
-          <div className="kpi-label">⏳ Créances en Attente</div>
+          <div className="kpi-label"> Créances en Attente</div>
           <div className="kpi-value">{formatCurrency(creancesEnAttente)}</div>
           <small style={{ fontSize: '12px', opacity: 0.8 }}>
             {facturesEnAttente.filter(f => f.type === 'client').length} facture(s)
@@ -220,7 +220,7 @@ const Dashboard = () => {
         </div>
 
         <div className="kpi-card danger">
-          <div className="kpi-label">⏳ Dettes en Attente</div>
+          <div className="kpi-label"> Dettes en Attente</div>
           <div className="kpi-value">{formatCurrency(dettesEnAttente)}</div>
           <small style={{ fontSize: '12px', opacity: 0.8 }}>
             {facturesEnAttente.filter(f => f.type === 'fournisseur').length} facture(s)
@@ -252,12 +252,12 @@ const Dashboard = () => {
       </div>
 
       <div className="kpi-grid">
-        <div className="kpi-card">💰 Caisse<div className="kpi-value">{formatCurrency(caisse)}</div></div>
-        <div className="kpi-card">🏦 Banque<div className="kpi-value">{formatCurrency(banque)}</div></div>
-        <div className="kpi-card">👥 Clients<div className="kpi-value">{formatCurrency(clients)}</div></div>
-        <div className="kpi-card warning">📦 Fournisseurs<div className="kpi-value">{formatCurrency(fournisseurs)}</div></div>
-        <div className="kpi-card warning">💳 Dettes<div className="kpi-value">{formatCurrency(dettes)}</div></div>
-        <div className="kpi-card warning">📋 TVA à payer<div className="kpi-value">{formatCurrency(tvaAPayer)}</div></div>
+        <div className="kpi-card"> Caisse<div className="kpi-value">{formatCurrency(caisse)}</div></div>
+        <div className="kpi-card"> Banque<div className="kpi-value">{formatCurrency(banque)}</div></div>
+        <div className="kpi-card"> Clients<div className="kpi-value">{formatCurrency(clients)}</div></div>
+        <div className="kpi-card warning"> Fournisseurs<div className="kpi-value">{formatCurrency(fournisseurs)}</div></div>
+        <div className="kpi-card warning"> Dettes<div className="kpi-value">{formatCurrency(dettes)}</div></div>
+        <div className="kpi-card warning"> TVA à payer<div className="kpi-value">{formatCurrency(tvaAPayer)}</div></div>
       </div>
     </div>
   );
