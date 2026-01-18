@@ -284,7 +284,7 @@ const Chargesmanager = () => {
               {filteredCharges.map(charge => (
                 <tr key={charge.id}>
                   <td>{formatDate(charge.date)}</td>
-                  <td><span style={{ background: 'var(--primary)', color: 'white', padding: '4px 8px', borderRadius: '4px', fontSize: '12px' }}>{charge.categorie}</span></td>
+                  <td><span style={{ background: '#60a5fa', color: 'white', padding: '4px 8px', borderRadius: '4px', fontSize: '12px' }}>{charge.categorie}</span></td>
                   <td>{charge.description}</td>
                   <td style={{ color: 'var(--danger)', fontWeight: 'bold' }}>{formatCurrency(charge.montant)}</td>
                   <td>{charge.comptePaye === 'caisse' ? '💰 Caisse' : '🏦 Banque'}</td>
