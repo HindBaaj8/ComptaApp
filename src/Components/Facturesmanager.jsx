@@ -300,22 +300,22 @@ const Facturesmanager = () => {
 
       <div className="kpi-grid" style={{ marginBottom: '30px' }}>
         <div className="kpi-card success">
-          <div className="kpi-label">💰 Total Ventes</div>
+          <div className="kpi-label"><span style={{ fontSize: '20px'}}>Total Ventes</span></div>
           <div className="kpi-value">{formatCurrency(stats.totalVentes)}</div>
         </div>
 
         <div className="kpi-card danger">
-          <div className="kpi-label">🛒 Total Achats</div>
+          <div className="kpi-label"><span style={{ fontSize: '20px'}}>Total Achats</span></div>
           <div className="kpi-value">{formatCurrency(stats.totalAchats)}</div>
         </div>
 
         <div className="kpi-card warning">
-          <div className="kpi-label">⏳ En Attente</div>
+          <div className="kpi-label"><span style={{ fontSize: '20px'}}>En Attente</span></div>
           <div className="kpi-value">{stats.facetesEnAttente}</div>
         </div>
 
         <div className="kpi-card success">
-          <div className="kpi-label">✅ Payées</div>
+          <div className="kpi-label"><span style={{ fontSize: '20px'}}>Payées</span></div>
           <div className="kpi-value">{stats.facetesPayees}</div>
         </div>
       </div>
@@ -381,7 +381,7 @@ const Facturesmanager = () => {
                   <td>
                     <span style={{ 
                       background: facture.type === 'client' ? 'var(--success)' : 'var(--warning)', 
-                      color: 'white', 
+                      color: 'black', 
                       padding: '4px 8px', 
                       borderRadius: '4px', 
                       fontSize: '12px' 
@@ -411,7 +411,7 @@ const Facturesmanager = () => {
                         className="btn-edit" 
                         onClick={() => previewFacture(facture)}
                         title="Voir"
-                        style={{ background: 'var(--info)' }}
+                        style={{ background: '#0ea5e9' }}
                       >
                         <Eye size={14} />
                       </button>
@@ -422,6 +422,7 @@ const Facturesmanager = () => {
                             className="btn-edit" 
                             onClick={() => ouvrirModal(facture)}
                             title="Modifier"
+                            style={{ background: '#6366f1' }}
                           >
                             <Edit2 size={14} />
                           </button>
@@ -429,7 +430,7 @@ const Facturesmanager = () => {
                             className="btn-edit" 
                             onClick={() => handleEnvoyer(facture.id)}
                             title="Envoyer"
-                            style={{ background: 'var(--primary)' }}
+                            style={{ background: '#7c3aed' }}
                           >
                             <Send size={14} />
                           </button>
@@ -441,7 +442,7 @@ const Facturesmanager = () => {
                           className="btn-edit" 
                           onClick={() => handleMarquerPaye(facture.id)}
                           title="Marquer comme payée"
-                          style={{ background: 'var(--success)' }}
+                          style={{ background: '#16a34a' }}
                         >
                           <CheckCircle size={14} />
                         </button>
@@ -451,7 +452,7 @@ const Facturesmanager = () => {
                         className="btn-edit" 
                         onClick={() => handleDupliquer(facture.id)}
                         title="Dupliquer"
-                        style={{ background: 'var(--warning)' }}
+                        style={{ background: '#0f766e ' }}
                       >
                         <Copy size={14} />
                       </button>
@@ -461,6 +462,7 @@ const Facturesmanager = () => {
                           className="btn-delete" 
                           onClick={() => handleAnnuler(facture.id)}
                           title="Annuler"
+                          style={{ background: '#f59e0b ' }}
                         >
                           <XCircle size={14} />
                         </button>
@@ -579,7 +581,7 @@ const Facturesmanager = () => {
               <div style={{ overflowX: 'auto' }}>
                 <table style={{ width: '100%', marginBottom: '10px' }}>
                   <thead>
-                    <tr style={{ background: 'var(--light)' }}>
+                    <tr style={{ background: 'light' }}>
                       <th style={{ padding: '10px', textAlign: 'left' }}>Désignation</th>
                       <th style={{ padding: '10px', textAlign: 'center', width: '100px' }}>Qté</th>
                       <th style={{ padding: '10px', textAlign: 'right', width: '120px' }}>Prix Unit.</th>
@@ -644,7 +646,7 @@ const Facturesmanager = () => {
                                 type="button"
                                 onClick={() => supprimerArticle(index)}
                                 style={{ 
-                                  background: 'var(--danger)', 
+                                  background: 'red', 
                                   color: 'white', 
                                   border: 'none', 
                                   borderRadius: '4px', 

@@ -104,7 +104,7 @@ const Actifsmanager = () => {
         <div className="kpi-card">
           <Wallet />
           <div>
-            <div className="kpi-label">Caisse</div>
+            <div className="kpi-label"><span style={{ fontSize: '20px'}}>Caisse</span></div>
             <div className="kpi-value">{formatCurrency(caisse)}</div>
           </div>
         </div>
@@ -112,7 +112,7 @@ const Actifsmanager = () => {
         <div className="kpi-card">
           <Building2 />
           <div>
-            <div className="kpi-label">Banque</div>
+            <div className="kpi-label"><span style={{ fontSize: '20px'}}>banque</span></div>
             <div className="kpi-value">{formatCurrency(banque)}</div>
           </div>
         </div>
@@ -120,7 +120,7 @@ const Actifsmanager = () => {
         <div className="kpi-card">
           <Users />
           <div>
-            <div className="kpi-label">Clients</div>
+            <div className="kpi-label"><span style={{ fontSize: '20px'}}>Clients</span></div>
             <div className="kpi-value">{formatCurrency(clients)}</div>
           </div>
         </div>
@@ -128,7 +128,7 @@ const Actifsmanager = () => {
         <div className="kpi-card success">
           <BarChart3 />
           <div>
-            <div className="kpi-label">Total Actifs</div>
+            <div className="kpi-label"><span style={{ fontSize: '20px'}}>Total Actifs</span></div>
             <div className="kpi-value">
               {formatCurrency(caisse + banque + clients)}
             </div>

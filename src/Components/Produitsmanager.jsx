@@ -276,9 +276,9 @@ const Produitsmanager = () => {
               {filteredProduits.map(produit => (
                 <tr key={produit.id}>
                   <td>{formatDate(produit.date)}</td>
-                  <td><span style={{ background: 'var(--success)', color: 'white', padding: '4px 8px', borderRadius: '4px', fontSize: '12px' }}>{produit.categorie}</span></td>
+                  <td><span style={{ background: '#10b981', color: 'white', padding: '4px 8px', borderRadius: '4px', fontSize: '12px' }}>{produit.categorie}</span></td>
                   <td>{produit.description}</td>
-                  <td style={{ color: 'var(--success)', fontWeight: 'bold' }}>{formatCurrency(produit.montant)}</td>
+                  <td style={{ color: '#10b981', fontWeight: 'bold' }}>{formatCurrency(produit.montant)}</td>
                   <td>
                     {produit.compteRecu === 'caisse' && '💰 Caisse'}
                     {produit.compteRecu === 'banque' && '🏦 Banque'}

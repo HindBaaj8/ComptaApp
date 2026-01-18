@@ -125,7 +125,7 @@ const Passifsmanager = () => {
         <div className="kpi-card warning">
           <Truck />
           <div>
-            <div className="kpi-label">Fournisseurs</div>
+            <div className="kpi-label"><span style={{ fontSize: '20px'}}>Fournisseurs</span></div>
             <div className="kpi-value">{formatCurrency(fournisseurs)}</div>
           </div>
         </div>
@@ -133,7 +133,7 @@ const Passifsmanager = () => {
         <div className="kpi-card warning">
           <CreditCard />
           <div>
-            <div className="kpi-label">Dettes</div>
+            <div className="kpi-label"><span style={{ fontSize: '20px'}}>dettes</span></div>
             <div className="kpi-value">{formatCurrency(dettes)}</div>
           </div>
         </div>
@@ -141,7 +141,7 @@ const Passifsmanager = () => {
         <div className="kpi-card warning">
           <Receipt />
           <div>
-            <div className="kpi-label">TVA à payer</div>
+            <div className="kpi-label"><span style={{ fontSize: '20px'}}>TVA à payer</span></div>
             <div className="kpi-value">{formatCurrency(tvaAPayer)}</div>
           </div>
         </div>
@@ -149,7 +149,7 @@ const Passifsmanager = () => {
         <div className="kpi-card danger">
           <BarChart3 />
           <div>
-            <div className="kpi-label">Total Passifs</div>
+            <div className="kpi-label"><span style={{ fontSize: '20px'}}>total Passifs</span></div>
             <div className="kpi-value">{formatCurrency(totalPassifs)}</div>
           </div>
         </div>
@@ -165,7 +165,7 @@ const Passifsmanager = () => {
           <Building2 />
           <strong>Banque :</strong> {formatCurrency(banque)}
         </div>
-      </div>
+      </div><br></br>
 
       {/* ================= FORM ================= */}
       <div className="form-section">
