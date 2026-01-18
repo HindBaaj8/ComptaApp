@@ -1,24 +1,32 @@
+// src/Components/Layout.js
 import React, { useState, useEffect } from 'react';
-import { Outlet, useNavigate, useLocation } from 'react-router-dom';
+import { Outlet, useNavigate, useLocation, Navigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { toggleTheme } from '../features/Themeslice';
 import { logout } from '../features/Authslice';
-import { LayoutDashboard, TrendingUp, TrendingDown, Receipt, FileText, FileBarChart, LogOut, User, Moon, Sun } from 'lucide-react';
+import { 
+  LayoutDashboard, TrendingUp, TrendingDown, Receipt, FileText, 
+  FileBarChart, LogOut, User, Moon, Sun 
+} from 'lucide-react';
 import './Layout.css'; 
+
 const Layout = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const dispatch = useDispatch();
-  
+
   const darkMode = useSelector(state => state.theme?.darkMode || false);
   const currentUser = useSelector(state => state.auth?.currentUser);
-  
+
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   useEffect(() => {
-    document.body.setAttribute('data-theme', darkMode ? 'dark' : 'light');
-  }, [darkMode]);
+  document.body.setAttribute('data-theme', darkMode ? 'dark' : 'light');
+}, [darkMode]);
 
+if (!currentUser) {
+  return <Navigate to="/login" replace />;
+}
   const menuItems = [
     { path: '/dashboard', label: 'Dashboard', icon: LayoutDashboard },
     { path: '/actifs', label: 'Actifs', icon: TrendingUp },
@@ -43,6 +51,7 @@ const Layout = () => {
 
   return (
     <div className="app-container">
+      {/* Mobile menu toggle */}
       <button 
         className="mobile-menu-toggle"
         onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
@@ -50,6 +59,7 @@ const Layout = () => {
         {mobileMenuOpen ? '✕' : '☰'}
       </button>
 
+      {/* Sidebar */}
       <aside className={`sidebar ${mobileMenuOpen ? 'mobile-open' : ''}`}>
         <div className="sidebar-header">
           <div className="logo">
@@ -61,6 +71,7 @@ const Layout = () => {
           </div>
         </div>
 
+        {/* User info */}
         {currentUser && (
           <div className="user-info">
             <div className="user-avatar">
@@ -75,6 +86,7 @@ const Layout = () => {
           </div>
         )}
 
+        {/* Navigation */}
         <nav className="sidebar-nav">
           {menuItems.map(item => {
             const Icon = item.icon;
@@ -91,6 +103,7 @@ const Layout = () => {
           })}
         </nav>
 
+        {/* Footer */}
         <div className="sidebar-footer">
           <button 
             className="mode-toggle"
@@ -107,17 +120,18 @@ const Layout = () => {
         </div>
       </aside>
 
+      {/* Main content */}
       <main className="main-content">
         <Outlet />
       </main>
 
+      {/* Mobile overlay */}
       {mobileMenuOpen && (
         <div 
           className="mobile-overlay"
           onClick={() => setMobileMenuOpen(false)}
         />
       )}
-
     </div>
   );
 };

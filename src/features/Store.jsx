@@ -1,4 +1,6 @@
 import { configureStore } from '@reduxjs/toolkit';
+import thunk from 'redux-thunk';
+import { authMiddleware } from './middleware';
 import capitauxReducer from './Capitauxslice';
 import actifsReducer from './Actifsslice';
 import passifsReducer from './Passifsslice';
@@ -19,6 +21,8 @@ export const store = configureStore({
     factures: facturesReducer,
     auth: authReducer,
   },
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware().concat(thunk, authMiddleware),
 });
 
 export default store;
