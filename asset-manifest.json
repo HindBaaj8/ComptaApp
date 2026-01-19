@@ -1,14 +1,14 @@
 {
   "files": {
     "main.css": "/ComptaApp/static/css/main.7e523ed5.css",
-    "main.js": "/ComptaApp/static/js/main.812a9a1e.js",
+    "main.js": "/ComptaApp/static/js/main.b85a1be7.js",
     "static/js/239.d93ff5d8.chunk.js": "/ComptaApp/static/js/239.d93ff5d8.chunk.js",
     "static/js/977.874d4776.chunk.js": "/ComptaApp/static/js/977.874d4776.chunk.js",
     "static/js/455.3995e24b.chunk.js": "/ComptaApp/static/js/455.3995e24b.chunk.js",
     "static/js/453.83fe8039.chunk.js": "/ComptaApp/static/js/453.83fe8039.chunk.js",
     "index.html": "/ComptaApp/index.html",
     "main.7e523ed5.css.map": "/ComptaApp/static/css/main.7e523ed5.css.map",
-    "main.812a9a1e.js.map": "/ComptaApp/static/js/main.812a9a1e.js.map",
+    "main.b85a1be7.js.map": "/ComptaApp/static/js/main.b85a1be7.js.map",
     "239.d93ff5d8.chunk.js.map": "/ComptaApp/static/js/239.d93ff5d8.chunk.js.map",
     "977.874d4776.chunk.js.map": "/ComptaApp/static/js/977.874d4776.chunk.js.map",
     "455.3995e24b.chunk.js.map": "/ComptaApp/static/js/455.3995e24b.chunk.js.map",
@@ -16,6 +16,6 @@
   },
   "entrypoints": [
     "static/css/main.7e523ed5.css",
-    "static/js/main.812a9a1e.js"
+    "static/js/main.b85a1be7.js"
   ]
 }
